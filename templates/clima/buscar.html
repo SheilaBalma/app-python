@@ -1,0 +1,41 @@
+{% extends "clima/base.html" %}
+{% block title %}Buscar ciudad · Clima{% endblock %}
+
+{% block content %}
+<div class="text-center mb-5">
+  <h1 class="fw-bold text-primary mb-3">Buscá una ciudad</h1>
+  <p class="text-muted">Ingresá el nombre de una ciudad para conocer su pronóstico</p>
+</div>
+
+<form class="row justify-content-center g-2 mb-4" method="get">
+  <div class="col-sm-6 col-md-4">
+    <input class="form-control form-control-lg" type="search" name="q" placeholder="Ej: Buenos Aires" value="{{ q }}">
+  </div>
+  <div class="col-auto">
+    <button class="btn btn-primary btn-lg">Buscar</button>
+    <a class="btn btn-outline-secondary btn-lg" href="/">Limpiar</a>
+  </div>
+</form>
+
+{% if q and not resultados %}
+  <div class="text-center text-muted">
+    <p>No se encontraron resultados para <strong>{{ q }}</strong>.</p>
+  </div>
+{% endif %}
+
+{% if resultados %}
+  <h4 class="mb-3 text-center text-secondary">Resultados</h4>
+  <div class="list-group shadow-sm">
+    {% for r in resultados %}
+      <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+         href="{% url 'pronostico' %}?lat={{ r.latitude|stringformat:'.6f' }}&lon={{ r.longitude|stringformat:'.6f' }}&nombre={{ r.name }}{% if r.admin1 %}, {{ r.admin1 }}{% endif %}{% if r.country %}, {{ r.country }}{% endif %}">
+        <div>
+          <div class="fw-semibold">{{ r.name }}{% if r.admin1 %} ({{ r.admin1 }}){% endif %}</div>
+          <small class="text-muted">{{ r.country }} — lat: {{ r.latitude }}, lon: {{ r.longitude }}</small>
+        </div>
+        <span class="badge bg-primary">Ver</span>
+      </a>
+    {% endfor %}
+  </div>
+{% endif %}
+{% endblock %}
