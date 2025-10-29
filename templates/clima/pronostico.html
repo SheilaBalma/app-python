@@ -19,88 +19,69 @@
     </div>
 
     {% if current %}
-    <!-- Clima actual -->
-    <div class="card border-0 shadow-sm mb-4">
-      <div class="card-body">
-        <h5 class="card-title text-primary mb-3">
-          🌡️ Clima actual
-        </h5>
-        <div class="row g-4 align-items-center">
-          <div class="col-md-6">
-            <ul class="list-unstyled mb-0">
-              <li class="mb-2">
-                <span class="fw-semibold">Temperatura:</span> {{ current.temperature }} °C
-              </li>
-              <li class="mb-2">
-                <span class="fw-semibold">Viento:</span> {{ current.windspeed }} km/h
-              </li>
-              <li>
-                <span class="fw-semibold">Dirección:</span> {{ current.winddirection }}°
-              </li>
-            </ul>
-          </div>
-          <div class="col-md-6 text-md-end">
-            <small class="text-muted">
-              ⏰ Hora de referencia: {{ current.time }}
-            </small>
-          </div>
-        </div>
+<!-- Clima actual -->
+<div class="card border-0 shadow-sm mb-4" style="background-color: rgba(230, 240, 255, 0.9);">
+  <div class="card-body">
+    <h5 class="card-title text-primary mb-3">
+      🌡️ Clima actual
+    </h5>
+    <div class="row g-4 align-items-center">
+      <div class="col-md-6">
+        <ul class="list-unstyled mb-0">
+          <li class="mb-2">
+            <span class="fw-semibold">Temperatura:</span> {{ current.temperature }}°C
+          </li>
+          <li class="mb-2">
+            <span class="fw-semibold">Viento:</span> {{ current.windspeed }} km/h
+          </li>
+          <li>
+            <span class="fw-semibold">Dirección:</span> {{ current.winddirection }}°
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-6 text-md-end">
+        <small class="text-muted">
+          ⏰ Hora de referencia: {{ current.time }}
+        </small>
       </div>
     </div>
-    {% endif %}
-
-    <!-- Pronóstico 7 días -->
-    <div class="mb-2 d-flex align-items-center gap-2">
-      <h5 class="text-secondary mb-0">
-        <i class="bi bi-calendar-week"></i> Próximos 7 días
-      </h5>
-    </div>
-
-    {% if dias %}
-    <div class="table-responsive">
-      <table class="table table-hover align-middle shadow-sm rounded-3 overflow-hidden">
-        <thead class="table-primary">
-          <tr>
-            <th>📅 Fecha</th>
-            <th>🌦️ Condición</th>
-            <th>⬆️ Máx (°C)</th>
-            <th>⬇️ Mín (°C)</th>
-            <th>💧 Prec. total (mm)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for d in dias %}
-            <tr>
-              <td class="fw-semibold">{{ d.fecha }}</td>
-              <td>{{ d.clima }}</td>
-              <td>{{ d.tmax }}</td>
-              <td>{{ d.tmin }}</td>
-              <td>{{ d.lluvia_mm }}</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-    {% else %}
-      <p class="text-muted">No hay datos de pronóstico disponibles.</p>
-    {% endif %}
   </div>
+</div>
+{% endif %}
 
-  <!-- Estilos extra -->
-  <style>
-    .card {
-      border-radius: 1rem;
-    }
-    .table {
-      background-color: rgba(255, 255, 255, 0.9);
-    }
-    .table th {
-      font-weight: 600;
-    }
-  </style>
+<!-- Pronóstico 7 días -->
+<div class="mb-2 d-flex align-items-center gap-2">
+  <h5 class="text-secondary mb-0">
+    <i class="bi bi-calendar-week"></i> Próximos 7 días
+  </h5>
+</div>
 
-  <!-- Íconos de Bootstrap -->
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+{% if dias %}
+<div class="table-responsive">
+  <table class="table table-hover align-middle shadow-sm rounded-3 overflow-hidden">
+    <thead class="table-primary">
+      <tr>
+        <th>📅 Fecha</th>
+        <th>🌦️ Condición</th>
+        <th>⬆️ Máx (°C)</th>
+        <th>⬇️ Mín (°C)</th>
+        <th>💧 Prec. total (mm)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for d in dias %}
+        <tr>
+          <td class="fw-semibold">{{ d.fecha }}</td>
+          <td>{{ d.clima }}</td>
+          <td>{{ d.tmax }}°C</td>
+          <td>{{ d.tmin }}°C</td>
+          <td>{{ d.lluvia_mm }} mm</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+  <p class="text-muted">No hay datos de pronóstico disponibles.</p>
+{% endif %}  
 {% endblock %}
